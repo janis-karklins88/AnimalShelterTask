@@ -59,9 +59,23 @@ public class ConsoleMenu {
 
         System.out.println("Enter name: ");
         String name = scanner.nextLine();
+        if(name.isBlank()){
+            System.out.println("Name cannot be empty.");
+            return;
+        }
 
         System.out.println("Enter age: ");
-        int age = Integer.parseInt(scanner.nextLine());
+        int age;
+        try {
+            age = Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Age must be a number.");
+            return;
+        }
+        if(age <= 0){
+            System.out.println("Age must be a positive number.");
+            return;
+        }
 
         Animal animal = switch (option) {
             case 1 -> new Bird(new AnimalId(), name, age);
@@ -83,7 +97,10 @@ public class ConsoleMenu {
     private void findAnimalBySpecies(){
         System.out.println("Enter species: ");
         String species = scanner.nextLine();
-
+        if (species.isBlank()) {
+            System.out.println("Species cannot be empty.");
+            return;
+        }
         for(Animal animal : shelter.findBySpecies(species)){
             System.out.println(animal);
         }
@@ -98,6 +115,10 @@ public class ConsoleMenu {
     private void markAnimalAsAdopted(){
         System.out.println("Enter animal id: ");
         String id = scanner.nextLine();
+        if (id.isBlank()) {
+            System.out.println("Id cannot be empty.");
+            return;
+        }
 
         shelter.markAsAdopted(id);
     }
